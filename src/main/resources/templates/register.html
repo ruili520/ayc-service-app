@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html style="font-size: 100px;" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+    <link href="/style.css" rel="stylesheet" type="text/css"/>
+
+
+    <title>注册-爱原创</title>
+
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if(clientWidth>=750){
+                        docEl.style.fontSize = '100px';
+                    }else{
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+
+</head>
+
+<body>
+<div id="Nav_bar">
+    <div class="left"><a href="#" onclick="history.go(-1)"><img src="/left_arrow.png"/></a></div>
+    <div class="center">注册</div>
+    <div class="right"><img src="/dian.png"/></div>
+</div>
+<!--中间内容部分-->
+<div id="content">
+    <div class="txt01">手机号<input type="number" id="mobile" name="mobile" class="text" pattern="[0-9]*" tabindex="10" onchange="check_for_btn()"/></div>
+    <div class="txt01">姓名<input type="text" id="realname" name="realname" class="text" tabindex="7" onchange="check_for_btn()"/></div>
+    <div class="txt01">爱好
+        <input type="text" id="realname" pattern="[0-9]*" name="realname" class="text" tabindex="6"/>
+    </div>
+    <div class="txt01">年龄<input type="number" id="realname" pattern="[0-9]*" name="realname" class="text1" tabindex="6"/></div>
+</div>
+<button id="btn" class="r_but" onclick="check()" style="background: rgb(209, 213, 219) none repeat scroll 0% 0%;">确定</button>
+<a href="weixin:// ">确定</a>
+
+<script type="text/javascript" src="/jquery-1.js"></script>
+
+<script type="text/javascript">
+    //弹出框
+    function alert1(e) {
+        $("body").append("<div id='msg'><span>" + e + "</span></div>");
+        clearmsg();
+    }
+
+    //关闭弹出框
+    function clearmsg() {
+        var t = setTimeout(function() {
+            $("#msg").remove();
+        }, 2000)
+    };
+
+    //提交后的check
+    function check() {
+
+        var mobile = $("#mobile").val();
+        var realname = $("#realname").val();
+
+        if(mobile == "") {
+            alert1("请输入手机号");
+            clearmsg();
+            return false;
+        }
+        if(!(/^1[34578]\d{9}$/.test(mobile))) {
+            alert1("请输入正确的手机号");
+            clearmsg();
+            return false;
+        }
+        if(realname == "") {
+            alert1("请输入姓名");
+            clearmsg();
+            return false;
+        }
+
+        $(".r_but").css("background", "#49b9eb");
+
+    }
+
+    //必填项没有全部填写时,灰色,全部填写时蓝色
+    function check_for_btn() {
+        var mobile = $("#mobile").val();
+        var realname = $("#realname").val();
+        if(realname == "" || mobile == null) {
+            $(".r_but").css("background", "#d1d5db");
+        }
+        /*<![CDATA[*/
+        if(realname != "" && mobile != null) {
+            $(".r_but").css("background", "#49b9eb");
+        }
+        /*]]>*/
+    }
+    $(function() {
+
+        $(".r_but").css("background", "#d1d5db");
+
+
+    })
+</script>
+
+</body></html>

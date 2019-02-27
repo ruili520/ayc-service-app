@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ayc.service.app.dao.mapper.ArticleCategoryEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.ayc.service.app.entity.ArticleCategoryEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="cate_name" property="cateName" jdbcType="VARCHAR" />
+    <result column="articles" property="articles" jdbcType="INTEGER" />
+    <result column="display_order" property="displayOrder" jdbcType="SMALLINT" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pid, cate_name, articles, display_order, created_at, updated_at, pic
+  </sql>
+  <!--获取列表-->
+  <select id="queryList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM ayc_article_category
+  </select>
+
+  <!--通过Id查询分类-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ayc_article_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteCategory" parameterType="java.lang.Integer" >
+    delete from ayc_article_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="addCategory" parameterType="com.ayc.service.app.entity.ArticleCategoryEntity" >
+    insert into ayc_article_category (id, pid, cate_name,
+      articles, display_order, created_at,
+      updated_at, pic)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{cateName,jdbcType=VARCHAR},
+      #{articles,jdbcType=INTEGER}, #{displayOrder,jdbcType=SMALLINT}, #{createdAt,jdbcType=TIMESTAMP},
+      #{updatedAt,jdbcType=TIMESTAMP}, #{pic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ayc.service.app.entity.ArticleCategoryEntity" >
+    insert into ayc_article_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="cateName != null" >
+        cate_name,
+      </if>
+      <if test="articles != null" >
+        articles,
+      </if>
+      <if test="displayOrder != null" >
+        display_order,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="cateName != null" >
+        #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="articles != null" >
+        #{articles,jdbcType=INTEGER},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ayc.service.app.entity.ArticleCategoryEntity" >
+    update ayc_article_category
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="cateName != null" >
+        cate_name = #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="articles != null" >
+        articles = #{articles,jdbcType=INTEGER},
+      </if>
+      <if test="displayOrder != null" >
+        display_order = #{displayOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ayc.service.app.entity.ArticleCategoryEntity" >
+    update ayc_article_category
+    set pid = #{pid,jdbcType=INTEGER},
+      cate_name = #{cateName,jdbcType=VARCHAR},
+      articles = #{articles,jdbcType=INTEGER},
+      display_order = #{displayOrder,jdbcType=SMALLINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      pic = #{pic,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

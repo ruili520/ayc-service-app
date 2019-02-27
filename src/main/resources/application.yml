@@ -1,0 +1,61 @@
+server:  
+  port: 8080
+  tomcat.uri-encoding: UTF-8
+#分页
+pagehelper:
+  helperDialect: mysql
+  reasonable: false
+  supportMethodsArguments: true
+  params: count=countSql
+ #分库index 每次添加一个数据源+10
+app:
+  bizdbIndex: 5
+
+spring:
+  #redis
+  redis:
+    host: 47.101.202.48
+    port: 16380
+    pool:
+      max-idle: 100
+      min-idle: 1
+      max-active: 100
+      max-wait: -1
+#  http:
+#    encoding:
+#      force: true
+#      charset: UTF-8
+#      enabled: true
+#    multipart:
+#      maxFileSize: 100Mb
+#      maxRequestSize: 1000M
+
+#阿里云推送配置：
+#阿里云短信配置：
+aliyunsms:
+  product: "Dysmsapi"
+  domain: "dysmsapi.aliyuncs.com"
+  access-key-id: "LTAILDSKNI0XFJJZ"
+  access-key-secret: "ziBMoGmetbgtRSabWS2nwnE1i4yQmG"
+
+#微信提现参数设置
+wxpay:
+  appid: "wx192aebd02872d98e"
+  appsecret: "891f24cd2b4578de35acac4e9574eee4"
+  paternerkey: "aiyuanchuang20181019aiyuanchuang"
+  mchid: "1510040161"
+  certpath: "static/apiclient_cert.p12"
+
+#支付宝提现参数设置
+aliPay:
+  url: "https://openapi.alipaydev.com/gateway.do"
+  appid: "2016091800537236"
+  privateKey: "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDcxeJwLKd6+BZjl/4FsBlhoki4VLS4c2z4pmoOlXLiz9Dh7pxJA2t+rVvzFc6Fa3XIjEpTw3c0fUpdRAomnrdxVKoJ4iZAMX8ZcJY5pLIeLFGYaAvII4P0NOw5DKcLfkWvgrAaO/Vbm1X8CfIbSS2VcDGxtHf3N3iuuA0mw0SjVHTV8jprC3yKF+KUDTkj4co+6gmWLL04BK850zWjYhjdFWhIcfQ5bEWBqtYOjPxdLod+rrju+UYgQ/TJf+rqXD8D5z6YI3MC+F3fEP7W7wOvUorrys8bU18phFj6Wqs2vnCZTMQm6fhH6CDytuEzCFHKPW1Lq26azhBMqVVe42lLAgMBAAECggEAaclcTlnnSpIT0FclPj56ewETDVhxXCza226KRUCxUyM3OPtn4ciEuqeA9sLNObsbLiSi/O4dcYZTmssefhDxX5ms/J1jrMDK4TrEkQxs2O5tjrTUaGs0MFEnm9KHPIeeBpJ9paRzVhjho6p0W0S+Vevzs+4AyfHHnxjMHHXWrtfGAb33cNDbZKwWXzKzHoAbs3RxtBl8BdzE5IDkv25iNJqrF3UI5yaqNpjGS1CTbJLPArWB3TWr5Q/pGeGnurkOTZG7TzyrGEMtdgeJl40h0zcUas6jCzhe/I0UwPTudfnhDEru/KsgzgCdY09I6wI1sIQsWZi9iv38bKOzhGS3+QKBgQD8ebob+dj+cNbAvyhnDAKzFVg4vBIiJ3CGTxwkNOiXcIS+ycR8ziJRguv14PVUfseAIWnZi6LUtdS5QLP7fSUbFA/QVOMJFZiRyKp9vc8t/+Eo/OAZUS6iKR19o6mG8bgUSsG3IZ8re2WIma8YAvcTv+uTPmHqpCsWYQ+LhxflpwKBgQDf2tyzLcTWTt3lfM9YcjgcELqftwQMQwaLNFBbnvyT6cH5/uSBpgD00xEbUAcjPcFqEuCEB6epUy+zttEwOXe6qfQR6oZELOz4G2n41dTEaIEUDJTzjQ55JwJv2Evhlhg2pIw/N2CvOu0+5UHTr20mxLGhuQ0ItL9EzN/e5A/bvQKBgQD5+qh79KiWXTE0zNB7Hxg5KoQcQJKPwI8YXJHXg49cCmtU4D+s9whhvohU/jTKQXDUe8DrReemRpbmCZtrASDRK87wjmvw3bIffhjYwSu2NulABQj56DiNFLp/YKGE3CZP6SjeYurPSbFhTBFia+UpZ9gfBSA8C+ohkV6r3smZdwKBgG2swEa1XOQW3daq0Lentl/hvl20ADK1wAYByoEpItyhQZ1nSbNPjtZkdtQn4GdewV1kBEYLrhRiolNtdY4oCcYVsHP6sG/EhxGD9OaqdUUJYnxdMbkl2fp3p1T+5yaOMCzNb70lN6SCvWv8TMUXBOZiphjzHjSuwatGqUR9/lsNAoGAaKNKiZUyy2YYTPZJJ0jjQJNdOxcjEte/cg05FaTAMeK5Xy7fOKVlXn2oNN/MgBxEnhwd5uUuomLY/74tgFgVlNafeNgGc6wPBPyWBC72TgQH0KUqK68wVzyYYyRrVuU46y3Nb9cPVSd6CP+KcyvW4c121rGIdRnWGj3mLfQ1+Bs="
+  publicKey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxhCL1dxb77VitEIb2hbYA4exO7iPq1f1/avRp97UFubN49VmIb/wjcbzsiRm+DeSbMMq/Qjz6lCALVGrEZIwU0t5sexg1H7D444//xXnxiBbdEQc6tp5pO6SBc0cU9gb/wVcV//n3AkPm8xZIrP0ijmdo6hYgByRWrfhXKX5+E8aIxNsxtr5oyhUFzrd+oG9leNu6ko0x9Un8fcDizQF+eqPwVdCB+Pq1TJezu7gzk5Z2JT3qkVA7KYGeY6LIsRUvrwkiYsHl+b1kN/1GWhtKMAu3sylLtq0jOpk9GWr66YZyybn15gRswP/krLTl7a1hM4gr6XdFhOLlSc+D7QM8QIDAQAB"
+
+ayc:
+  app:
+    url: http://192.168.1.120:9500 # 当前项目地址
+    host: http://192.168.1.120    # 当前项目主机地址
+    port: 9500                    # 当前项目端口
+    webUrl: http://www.loveayc.com  # web项目地址

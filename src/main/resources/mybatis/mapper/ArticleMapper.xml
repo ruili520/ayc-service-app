@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ayc.service.app.dao.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.ayc.service.app.entity.ArticleEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cate_id" property="cateId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="from" property="from" jdbcType="TINYINT" />
+    <result column="is_free" property="isFree" jdbcType="TINYINT" />
+    <result column="cash" property="cash" jdbcType="DECIMAL" />
+    <result column="cate_pid" property="catePid" jdbcType="INTEGER" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="read_times" property="readTimes" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="free_percent" property="freePercent" jdbcType="TINYINT" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+    <result column="share_num" property="shareNum" jdbcType="INTEGER" />
+    <result column="collect_num" property="collectNum" jdbcType="INTEGER" />
+    <result column="pen_name" property="penName" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ayc.service.app.entity.ArticleEntity" extends="BaseResultMap" >
+    <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cate_id, title, uid, author, `from`, is_free, cash, cate_pid, pic, read_times,
+    price, free_percent, created_at, updated_at, num, comment_num, status, like_num, 
+    share_num, collect_num, pen_name, avatar
+  </sql>
+  <sql id="Blob_Column_List" >
+    `desc`
+  </sql>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM ayc_article
+    <where>
+      <if test="uid != null and uid != ''">
+        and uid = #{uid, jdbcType=INTEGER}
+      </if>
+      <if test="likeDesc !=null and likeDesc !=''">
+        and CONCAT(`author`,`title`) like concat("%",#{likeDesc},"%")
+      </if>
+    </where>
+    <choose>
+      <when test="orderBy != null and orderBy != ''">
+        order by ${orderBy}
+      </when>
+      <otherwise>
+        order by updated_at DESC
+      </otherwise>
+    </choose>
+  </select>
+
+  <select id="getArtcledesc" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ayc_article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ayc_article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ayc_article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ayc.service.app.entity.ArticleEntity" >
+    insert into ayc_article (id, cate_id, title, 
+      uid, author, `from`,
+      is_free, cash, cate_pid, 
+      pic, read_times, price, 
+      free_percent, created_at, updated_at, 
+      num, comment_num, status, 
+      like_num, share_num, collect_num, 
+      pen_name, avatar, `desc`
+      )
+    values (#{id,jdbcType=INTEGER}, #{cateId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, #{from,jdbcType=TINYINT}, 
+      #{isFree,jdbcType=TINYINT}, #{cash,jdbcType=DECIMAL}, #{catePid,jdbcType=INTEGER}, 
+      #{pic,jdbcType=VARCHAR}, #{readTimes,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+      #{freePercent,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{num,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{likeNum,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER}, #{collectNum,jdbcType=INTEGER}, 
+      #{penName,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{desc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ayc.service.app.entity.ArticleEntity" >
+    insert into ayc_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cateId != null" >
+        cate_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="from != null" >
+        `from`,
+      </if>
+      <if test="isFree != null" >
+        is_free,
+      </if>
+      <if test="cash != null" >
+        cash,
+      </if>
+      <if test="catePid != null" >
+        cate_pid,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="readTimes != null" >
+        read_times,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="freePercent != null" >
+        free_percent,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="commentNum != null" >
+        comment_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="likeNum != null" >
+        like_num,
+      </if>
+      <if test="shareNum != null" >
+        share_num,
+      </if>
+      <if test="collectNum != null" >
+        collect_num,
+      </if>
+      <if test="penName != null" >
+        pen_name,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="desc != null" >
+        `desc`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cateId != null" >
+        #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="from != null" >
+        #{from,jdbcType=TINYINT},
+      </if>
+      <if test="isFree != null" >
+        #{isFree,jdbcType=TINYINT},
+      </if>
+      <if test="cash != null" >
+        #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="catePid != null" >
+        #{catePid,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="readTimes != null" >
+        #{readTimes,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="freePercent != null" >
+        #{freePercent,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null" >
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="likeNum != null" >
+        #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="shareNum != null" >
+        #{shareNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null" >
+        #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="penName != null" >
+        #{penName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        #{desc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ayc.service.app.entity.ArticleEntity" >
+    update ayc_article
+    <set >
+      <if test="cateId != null" >
+        cate_id = #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="from != null" >
+        `from` = #{from,jdbcType=TINYINT},
+      </if>
+      <if test="isFree != null" >
+        is_free = #{isFree,jdbcType=TINYINT},
+      </if>
+      <if test="cash != null" >
+        cash = #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="catePid != null" >
+        cate_pid = #{catePid,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="readTimes != null" >
+        read_times = #{readTimes,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="freePercent != null" >
+        free_percent = #{freePercent,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null" >
+        comment_num = #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="likeNum != null" >
+        like_num = #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="shareNum != null" >
+        share_num = #{shareNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null" >
+        collect_num = #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="penName != null" >
+        pen_name = #{penName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        `desc` = #{desc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ayc.service.app.entity.ArticleEntity" >
+    update ayc_article
+    set cate_id = #{cateId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      `from` = #{from,jdbcType=TINYINT},
+      is_free = #{isFree,jdbcType=TINYINT},
+      cash = #{cash,jdbcType=DECIMAL},
+      cate_pid = #{catePid,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=VARCHAR},
+      read_times = #{readTimes,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      free_percent = #{freePercent,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      num = #{num,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      share_num = #{shareNum,jdbcType=INTEGER},
+      collect_num = #{collectNum,jdbcType=INTEGER},
+      pen_name = #{penName,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ayc.service.app.entity.ArticleEntity" >
+    update ayc_article
+    set cate_id = #{cateId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      `from` = #{from,jdbcType=TINYINT},
+      is_free = #{isFree,jdbcType=TINYINT},
+      cash = #{cash,jdbcType=DECIMAL},
+      cate_pid = #{catePid,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=VARCHAR},
+      read_times = #{readTimes,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      free_percent = #{freePercent,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      num = #{num,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      share_num = #{shareNum,jdbcType=INTEGER},
+      collect_num = #{collectNum,jdbcType=INTEGER},
+      pen_name = #{penName,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 获取我的收藏列表 -->
+  <select id="listMyCollects" resultMap="BaseResultMap">
+    select
+      a.*
+    from ayc_article a
+    inner join ayc_article_collect b on a.id = b.article_id
+    where b.uid = #{uid, jdbcType=VARCHAR}
+    <choose>
+      <when test="orderBy != null and orderBy != ''">
+        order by ${orderBy}
+      </when>
+      <otherwise>
+        order by updated_at DESC
+      </otherwise>
+    </choose>
+  </select>
+</mapper>

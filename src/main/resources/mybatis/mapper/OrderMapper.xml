@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ayc.service.app.dao.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.ayc.service.app.entity.OrderEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="cash" property="cash" jdbcType="DECIMAL"/>
+        <result column="uid" property="uid" jdbcType="INTEGER"/>
+        <result column="obj_type" property="objType" jdbcType="TINYINT"/>
+        <result column="obj_id" property="objId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="desc" property="desc" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, code, cash, uid, obj_type, obj_id, status, created_at, updated_at, `desc`
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ayc_order
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ayc_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ayc.service.app.entity.OrderEntity">
+    insert into ayc_order (id, code, cash, 
+      uid, obj_type, obj_id, 
+      status, created_at, updated_at, 
+      `desc`)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{cash,jdbcType=DECIMAL}, 
+      #{uid,jdbcType=INTEGER}, #{objType,jdbcType=TINYINT}, #{objId,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{desc,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ayc.service.app.entity.OrderEntity">
+        insert into ayc_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="cash != null">
+                cash,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="objType != null">
+                obj_type,
+            </if>
+            <if test="objId != null">
+                obj_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="desc != null">
+                `desc`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="cash != null">
+                #{cash,jdbcType=DECIMAL},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="objType != null">
+                #{objType,jdbcType=TINYINT},
+            </if>
+            <if test="objId != null">
+                #{objId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="desc != null">
+                #{desc,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ayc.service.app.entity.OrderEntity">
+        update ayc_order
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="cash != null">
+                cash = #{cash,jdbcType=DECIMAL},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="objType != null">
+                obj_type = #{objType,jdbcType=TINYINT},
+            </if>
+            <if test="objId != null">
+                obj_id = #{objId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ayc.service.app.entity.OrderEntity">
+    update ayc_order
+    set code = #{code,jdbcType=VARCHAR},
+      cash = #{cash,jdbcType=DECIMAL},
+      uid = #{uid,jdbcType=INTEGER},
+      obj_type = #{objType,jdbcType=TINYINT},
+      obj_id = #{objId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      `desc` = #{desc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="selectByCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ayc_order
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateByCode" parameterType="com.ayc.service.app.entity.OrderEntity">
+        update
+        ayc_order
+        set status = #{status,jdbcType=TINYINT}
+        where code = #{code,jdbcType=VARCHAR}
+    </update>
+</mapper>
